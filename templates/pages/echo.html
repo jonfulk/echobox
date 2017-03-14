@@ -1,0 +1,21 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Echobox{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="jumbotron">
+      <h1>{{ echo.message }}</h1>
+      <h2>
+        <a href="{{ echo.permalink }}">{{ echo.permalink }}</a>
+      </h2>
+    </div>
+    <div class="row">
+      <div class='col-md-10 col-md-offset-1'>
+        <a href="{{ url_for('home') }}" class="btn btn-md btn-primary">Echo Again</a>
+        <a href="{{ url_for('view_all') }}" class="btn btn-md btn-success">View All Echoes</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
