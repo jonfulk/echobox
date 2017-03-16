@@ -1,19 +1,15 @@
 $(document).ready(function() {
 
-  function update_total() {
-    $.getJSON($SCRIPT_ROOT + "/_total",
-      function(data) {
-        $("#total").text(data.echoes);
-      });
+  function update_total(count) {
+    $("#total").text(count);
   }
 
-  function go(url) {
+  function deleteEcho(url) {
     $.ajax({
       url: url
     })
-    .done(function() {
-      console.log('done!');
-      update_total();
+    .success(function(result) {
+      update_total(result.echoes);
     });
   }
 
@@ -21,7 +17,7 @@ $(document).ready(function() {
     e.preventDefault();
     var url = $(this).attr('href')
     $(this).parent().fadeOut(700, function() {
-      go(url);
+      deleteEcho(url);
     });
   })
 

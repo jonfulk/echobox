@@ -81,17 +81,15 @@ def echo(link):
 
 @app.route('/echoes/delete/<url>')
 def delete(url):
-    """Delete a specific echo"""
+    """Delete a specific echo and update total"""
     echo = Echo.query.filter_by(url=url).first()
-    db.session.delete(echo)
-    db.session.commit()
-    return redirect(url_for('view_all'))
-
-@app.route('/_total')
-def total():
-    """Return Jsonified count to Ajax"""
-    echoes = Echo.query.count()
-    return jsonify(echoes=echoes)
+    if echo:
+        db.session.delete(echo)
+        db.session.commit()
+        echoes = Echo.query.count()
+        return jsonify({'success': True, 'echoes': echoes})
+    else:
+        return jsonify({'success': False})
 
 
 # Error handlers
