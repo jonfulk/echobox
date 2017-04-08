@@ -44,7 +44,7 @@ class Echo(db.Model):
 
     @property
     def permalink(self):
-        return url_for('echo', link=self.url, _external=True)
+        return url_for('echo', url=self.url, _external=True)
 
 
 #----------------------------------------------------------------------------#
@@ -54,7 +54,6 @@ class Echo(db.Model):
 def home():
     """Post route for creating an echo."""
     if request.method == 'POST':
-        #save form data to the db
         item = Echo(request.form['message'])
         db.session.add(item)
         db.session.commit()
@@ -71,10 +70,10 @@ def view_all():
     return render_template('pages/echoes.html', echoes=echoes)
 
 
-@app.route('/echoes/<link>')
-def echo(link):
+@app.route('/echoes/<url>')
+def echo(url):
     """Return individual echo by ID"""
-    echo = Echo.query.filter_by(url=link).first()
+    echo = Echo.query.filter_by(url=url).first_or_404()
     echoes = Echo.query.all()
     return render_template('/pages/echo.html', echo=echo, echoes=echoes)
 
