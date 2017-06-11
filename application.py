@@ -14,7 +14,8 @@ from flask_sqlalchemy import SQLAlchemy
 # App Config.
 #----------------------------------------------------------------------------#
 
-app = Flask(__name__)
+application = Flask(__name__)
+app = application
 app.config.from_object('config')
 db = SQLAlchemy(app)
 
